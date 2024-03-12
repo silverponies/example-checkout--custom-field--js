@@ -23,4 +23,4 @@ jobs:
           # .env content after a deploy
           SHOPIFY_API_KEY: 38e4a161a4e5cade21c300308ced9224
           SHOPIFY_CUSTOM_FIELD_ID: d7f10a88-4127-4423-ae37-d74d09b345af
-        run: yarn deploy -f --source-control-url "$COMMIT_URL"
+        run: yarn deploy -f --client-id 38e4a161a4e5cade21c300308ced9224 --source-control-url "$COMMIT_URL"
