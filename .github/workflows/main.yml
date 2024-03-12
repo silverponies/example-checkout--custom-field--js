@@ -1,0 +1,26 @@
+name: Deploy app
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - name: Install npm dependencies
+        run: yarn install
+      - name: Deploy
+        env:
+          # Token from the Partner Dashboard
+          SHOPIFY_CLI_PARTNERS_TOKEN: ${{ secrets.SHOPIFY_CLI_PARTNERS_TOKEN }}
+          COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+          # .env content after a deploy
+          SHOPIFY_API_KEY: 38e4a161a4e5cade21c300308ced9224
+          SHOPIFY_CUSTOM_FIELD_ID: d7f10a88-4127-4423-ae37-d74d09b345af
+        run: yarn deploy -f --source-control-url "$COMMIT_URL"
